@@ -6,40 +6,14 @@
 #include "Enemy.hpp"
 #include "Bullet.hpp"
 #include "Ship.hpp"
-
-
-
-class Brevno : public Bullet
-{
-
-	public:
-		Brevno(Point const &a): Bullet(a){
-			set_health(300);
-			add_point(Point(1, 0, '#'));
-			add_point(Point(2, 0, '#'));
-			add_point(Point(3, 0, '#'));
-			add_point(Point(4, 0, '#'));
-		}
-
-		void left(){
-			Object::left();
-			Object::left();
-			Object::left();
-			get_damage(1);
-			if (get_position().get_x() < 1)
-				get_damage(1000);
-		}
-		~Brevno(){
-			clearObj();
-		};
-};
-
+#include "Brevno.hpp"
 
 
 int main(int argc, char const *argv[])
 {
 	
-	Ship my;
+{
+		Ship my;
 	clock_t start  =  clock(), start1 =  clock(), start2 =  clock(), start3 =  clock();
 	Object * enemy[30];
 	Object * freind[30];
@@ -53,13 +27,13 @@ int main(int argc, char const *argv[])
 	initscr();
 	refresh();
 	curs_set(0);
+	noecho();
 	keypad(stdscr, TRUE);
 	srand(time(NULL));
-	start = 
 	nodelay(stdscr, true);
 	while ((a = getch()))
 	{
-		move(0,100);
+		move(0,getmaxx(stdscr) - 15);
 		printw("HITpoint: %3d", my.get_status());
 		move(0,0);
 		if (my.get_status() == 0)
@@ -145,7 +119,7 @@ int main(int argc, char const *argv[])
 		refresh();
 	}
 	endwin();
-
+}
 	system("leaks a.out");
 	return 0;
 }
