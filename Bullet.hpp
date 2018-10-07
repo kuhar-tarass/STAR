@@ -7,9 +7,12 @@
 class Bullet : public Object
 {
   public:
+  	Bullet();
+  	Bullet(Bullet const &src);
 	Bullet(Point const &a);
 	virtual ~Bullet();
 
+	Bullet &operator=(Bullet const &src);
 	void right();
 
 	void drawObj();

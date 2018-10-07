@@ -11,6 +11,9 @@ Point::Point(int x, int y) : x(x), y(y) , k(0){
 Point::Point(int x, int y, char k) : x(x), y(y) , k(k){
 }
 
+Point::~Point() {
+
+}
 int Point::get_x(){
 	return x;
 }

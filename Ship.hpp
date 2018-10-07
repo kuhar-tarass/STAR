@@ -6,13 +6,13 @@
 class Ship : public Object
 {
 	
-	private:
-		int		AP;
-
 	public:
 
 	Ship();
 	~Ship();
+	Ship(Ship const &src);
+
+	Ship &operator=(Ship const &src);
 
 };
 

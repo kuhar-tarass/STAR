@@ -37,6 +37,7 @@ class Brevno : public Bullet
 void menu() {
 	srand(time(NULL));
 	initscr();
+	curs_set(0);
 	clear();
 	start_color();
 	use_default_colors();
@@ -138,7 +139,7 @@ void menu() {
 	exit(EXIT_SUCCESS);
 }
 
-int main(int argc, char const *argv[])
+int main(void)
 {
 	menu();
 	Ship my;
@@ -241,7 +242,7 @@ int main(int argc, char const *argv[])
 		case KEY_DOWN:	my.down();	break;
 		case KEY_RIGHT:	my.right();	break;
 		case KEY_LEFT:	my.left();	break;
-		case 27:		endwin();	return 0;
+		case 27:		endwin();	menu(); break;
 		default:					break;
 		}
 		refresh();

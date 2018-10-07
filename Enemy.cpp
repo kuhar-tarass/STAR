@@ -1,5 +1,18 @@
 #include "Enemy.hpp"
 
+Enemy::Enemy() {
+
+}
+
+Enemy &Enemy::operator=(Enemy const &src) {
+
+	(void)src;
+	return (*this);
+}
+
+Enemy::Enemy(Enemy const &src) {
+	*this = src;
+}
 Enemy::Enemy(Point const &a) : Object(a)
 {
 	int lol;
