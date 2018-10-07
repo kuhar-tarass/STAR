@@ -8,8 +8,8 @@
 class Enemy : public Object
 {
 	public:
-	Enemy(){
-		set_health(10);
+	Enemy(Point const &a) : Object(a){
+		set_health(40);
 		add_point(Point(0,0, '#'));
 		add_point(Point(0,1, '#'));
 		add_point(Point(1,0, '#'));
@@ -17,16 +17,19 @@ class Enemy : public Object
 	}
 
 	~Enemy(){
-		Object::~Object();
 		clearObj();
 	}
 
 	void left(){
-		if (get_position().get_x() == 0)
-			set_health(0);
-		else
-			Object::left();
+		if (get_position().get_x() < 1)
+			get_damage(10);
+		Object::left();
 	}
+	void drawObj()
+		{
+			if (get_status())
+				Object::drawObj();
+		}
 };
 
 class Bullet: public Object
@@ -34,14 +37,12 @@ class Bullet: public Object
 	public:
 		Bullet(Point const &a) : Object(a)
 		{
-			set_health(5);
+			set_health(40);
 			add_point(Point(0,0, '-'));
 			add_point(Point(1,0, '-'));
 		}
 
 		void right(){
-			if (!get_status())
-				return ;
 			Object::right();
 			get_damage(1);
 		}
@@ -103,10 +104,14 @@ int main(int argc, char const *argv[])
 		freind[i] = 0;
 	}
 
+	// Enemy a(Point(10,10));
+	// Bullet b(Point(20,20));
+	 
+	// std::cout << (int)a.colision(b) << std::endl;
+	int a = 0;
 	initscr();
 	refresh();
 	curs_set(0);
-		int a = 0;
 	keypad(stdscr, TRUE);
 	srand(time(NULL));
 	start = clock();
@@ -120,6 +125,14 @@ int main(int argc, char const *argv[])
 		{
 			if (enemy[i])
 			{
+				for(int j = 0; j < 30; j++)
+					if (freind[j])
+						if (enemy[i]->colision(*freind[j]))
+							{
+								enemy[i]->get_damage(1);
+								freind[j]->get_damage(2);
+								continue;
+							}
 				if (enemy[i]->get_status() <= 0){
 					delete enemy[i];
 					enemy[i] = 0;
@@ -129,7 +142,7 @@ int main(int argc, char const *argv[])
 			}
 			if (freind[i])
 			{
-				if (!(freind[i]->get_status())){
+				if ( freind[i]->get_status() <= 0){
 					delete freind[i];
 					freind[i] = 0;
 				}
@@ -164,8 +177,7 @@ int main(int argc, char const *argv[])
 			int i = -1;
 			while(enemy[++i]);
 			if (i < 30){
-				enemy[i] = new Enemy();
-				enemy[i]->teleport(Point(70, rand() % 15));
+				enemy[i] = new Enemy(Point(70, rand() % 15));
 			}
 		}
 		switch (a)

@@ -5,15 +5,15 @@
 bool Object::colision(Object const &a){
 	for (int i = 0; i < n_; i++)
 		for (int j = 0; j < a.n_; j++)
-			if (arr_[i] == a.arr_[j])
-				return true;
+				if ((*this)[i] == (a)[j])
+					return true;
 	return false;
 }
 
 
 void Object::clearObj(){
 		for (int i = 0; i < n_; i++){
-			move((arr_[i] + shift_).get_y(), (arr_[i] + shift_).get_x());
+			move((*this)[i].get_y(), (*this)[i].get_x());
 			printw(" ");
 		}
 }
@@ -23,6 +23,7 @@ void Object::drawObj(){
 			printw("%c", arr_[i].get_char());
 		}
 }
+
 
 void Object::add_point(Point const &a){
 	Point *tmp = new Point[n_ + 1];
@@ -40,7 +41,9 @@ void Object::add_point(Point const &a){
 Point Object::operator[](int i) const
 {
 	if (i < n_)
-		return arr_[i] + shift_;
+	{
+		return Point(arr_[i] + shift_);
+	}
 	return Point();
 }
 
@@ -92,8 +95,10 @@ Point Object::get_position() const {
 }
 
 void Object::get_damage(int a){
-	health -= health - a;
-	health < 0 ? health = 0 : 0;
+	if (health > a)
+		health -= a;
+	else
+		health = 0;
 }	
 
 int Object::get_status() const {
@@ -101,5 +106,5 @@ int Object::get_status() const {
 }
 
 void Object::set_health(int a){
-	health += a;
+	health = a;
 }

@@ -1,17 +1,13 @@
 #include "Point.hpp"
 
 Point::Point() : x(0), y(0), k(0){
-		// std::cout << "###";
+
 }
 
-Point::Point(int x, int y) : x(x), y(y) , k(0)
-{
-		// std::cout << "###";
+Point::Point(int x, int y) : x(x), y(y) , k(0){
 }
 
-Point::Point(int x, int y, char k) : x(x), y(y) , k(k)
-{
-		// std::cout << "###";
+Point::Point(int x, int y, char k) : x(x), y(y) , k(k){
 }
 
 int Point::get_x(){

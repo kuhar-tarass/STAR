@@ -26,7 +26,7 @@ class Object{
 		virtual void drawObj();
 		
 		void	set_health(int a);
-		virtual void get_damage(int a);
+		void get_damage(int a);
 		void teleport(Point const &a);
 		Point get_position() const;
 		int   get_status() const;
