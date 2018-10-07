@@ -1,102 +1,46 @@
-#include <iostream>
 #include <curses.h>
 #include <time.h>
+#include <iostream>
 #include "Object.hpp"
 #include "Point.hpp"
+#include "Enemy.hpp"
+#include "Bullet.hpp"
+#include "Ship.hpp"
 
 
-class Enemy : public Object
+
+class Brevno : public Bullet
 {
+
 	public:
-	Enemy(Point const &a) : Object(a){
-		set_health(40);
-		add_point(Point(0,0, '#'));
-		add_point(Point(0,1, '#'));
-		add_point(Point(1,0, '#'));
-		add_point(Point(1,1, '#'));
-	}
-
-	~Enemy(){
-		clearObj();
-	}
-
-	void left(){
-		if (get_position().get_x() < 1)
-			get_damage(10);
-		Object::left();
-	}
-	void drawObj()
-		{
-			if (get_status())
-				Object::drawObj();
-		}
-};
-
-class Bullet: public Object
-{
-	public:
-		Bullet(Point const &a) : Object(a)
-		{
-			set_health(40);
-			add_point(Point(0,0, '-'));
-			add_point(Point(1,0, '-'));
+		Brevno(Point const &a): Bullet(a){
+			set_health(300);
+			add_point(Point(1, 0, '#'));
+			add_point(Point(2, 0, '#'));
+			add_point(Point(3, 0, '#'));
+			add_point(Point(4, 0, '#'));
 		}
 
-		void right(){
-			Object::right();
+		void left(){
+			Object::left();
+			Object::left();
+			Object::left();
 			get_damage(1);
+			if (get_position().get_x() < 1)
+				get_damage(1000);
 		}
-		void drawObj()
-		{
-			if (get_status())
-				Object::drawObj();
-		}
-
-		~Bullet(){
+		~Brevno(){
 			clearObj();
-		}
-
+		};
 };
-
-class Ship : public Object
-{
-	
-	private:
-		int		npoints;
-		int		AP;
-
-	public:
-
-	Ship(){
-		AP = 0;
-		add_point(Point(1,0, '\\'));
-		add_point(Point(1,1,'#'));
-		add_point(Point(1,2, '/'));
-		add_point(Point(0,1, '#'));
-		add_point(Point(2,1, '>'));
-	}
-
-};
-
-
-// void destroyer(Object *enemy[30], Object *fre)
-// {
-
-
-// }
 
 
 
 int main(int argc, char const *argv[])
 {
-
-	// Ship hueta;
 	
 	Ship my;
-	clock_t start;
-	clock_t start1;
-	clock_t start2;
-	clock_t start3;
+	clock_t start  =  clock(), start1 =  clock(), start2 =  clock(), start3 =  clock();
 	Object * enemy[30];
 	Object * freind[30];
 	for(int i= 0; i < 30; i++){
@@ -104,23 +48,23 @@ int main(int argc, char const *argv[])
 		freind[i] = 0;
 	}
 
-	// Enemy a(Point(10,10));
-	// Bullet b(Point(20,20));
-	 
-	// std::cout << (int)a.colision(b) << std::endl;
 	int a = 0;
+
 	initscr();
 	refresh();
 	curs_set(0);
 	keypad(stdscr, TRUE);
 	srand(time(NULL));
-	start = clock();
-	start1 = clock();
-	start2 = clock();
-	start3 = clock();
+	start = 
 	nodelay(stdscr, true);
 	while ((a = getch()))
 	{
+		move(0,100);
+		printw("HITpoint: %3d", my.get_status());
+		move(0,0);
+		if (my.get_status() == 0)
+			break;
+		refresh();
 		for (int i = 0; i < 30; i++)
 		{
 			if (enemy[i])
@@ -133,6 +77,11 @@ int main(int argc, char const *argv[])
 								freind[j]->get_damage(2);
 								continue;
 							}
+				if (enemy[i]->colision(my))
+				{
+					enemy[i]->get_damage(100);
+					my.get_damage(15);
+				}
 				if (enemy[i]->get_status() <= 0){
 					delete enemy[i];
 					enemy[i] = 0;
@@ -177,38 +126,26 @@ int main(int argc, char const *argv[])
 			int i = -1;
 			while(enemy[++i]);
 			if (i < 30){
-				enemy[i] = new Enemy(Point(70, rand() % 15));
+				if (rand()%2)
+					enemy[i] = new Enemy(Point(140, rand() % 15));
+				else
+					enemy[i] = new Brevno(Point(120,rand() % 10));
 			}
 		}
+		
 		switch (a)
 		{
-		case KEY_UP:
-			my.up();
-			break;
-		case KEY_DOWN:
-			my.down();
-			break;
-		case KEY_RIGHT:
-			my.right();
-			break;
-		case KEY_LEFT:
-			my.left();
-			break;
-		case 27:
-		{
-			endwin();
-			return 0;
+		case KEY_UP: 	my.up(); 	break;
+		case KEY_DOWN:	my.down();	break;
+		case KEY_RIGHT:	my.right();	break;
+		case KEY_LEFT:	my.left();	break;
+		case 27:		endwin();	return 0;
+		default:					break;
 		}
-		default:
-			break;
-		}
-
-		
-		move(0, 0);
 		refresh();
 	}
 	endwin();
 
-
+	system("leaks a.out");
 	return 0;
 }

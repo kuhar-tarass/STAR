@@ -1,4 +1,5 @@
 #include "Point.hpp"
+#include <ncurses.h>
 
 Point::Point() : x(0), y(0), k(0){
 
@@ -51,7 +52,7 @@ void Point::left(){
 }
 void Point::right(){
 	x++;
-	x = x >= 0 ? x : 0;
+	x = x < getmaxx(stdscr) - 10 ? x : getmaxx(stdscr) - 10;
 }
 void Point::up(){
 	y--;
@@ -59,5 +60,6 @@ void Point::up(){
 }
 void Point::down(){
 	y++;
-	y = y >= 0 ? y : 0;
+	// y = y >= 0 ? y : 0;
+	y = y < getmaxy(stdscr) - 10 ? y : getmaxy(stdscr) - 10;
 }

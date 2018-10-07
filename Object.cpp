@@ -6,7 +6,7 @@ bool Object::colision(Object const &a){
 	for (int i = 0; i < n_; i++)
 		for (int j = 0; j < a.n_; j++)
 				if ((*this)[i] == (a)[j])
-					return true;
+				return true;
 	return false;
 }
 
