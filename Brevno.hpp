@@ -5,10 +5,13 @@
 
 class Brevno : public Bullet
 {
-
+	private:
+		Brevno();
+		Brevno(Brevno const &a);
+		Brevno &operator=(Brevno const&a);
 	public:
 		Brevno(Point const &a);
-		void left();
 		~Brevno();
+		void left();
 };
 #endif

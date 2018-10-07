@@ -2,8 +2,7 @@
 #include "Object.hpp"
 #include <curses.h>
 
-bool Object::colision(Object const &a){
-	for (int i = 0; i < n_; i++)
+bool Object::colision(Object const &a){for (int i = 0; i < n_; i++)
 		for (int j = 0; j < a.n_; j++)
 				if ((*this)[i] == (a)[j])
 				return true;
@@ -15,7 +14,6 @@ Object::Object(Object const &src) {
 }
 
 Object &Object::operator=(Object const &src) {
-
 	(void)src;
 	return (*this);
 }

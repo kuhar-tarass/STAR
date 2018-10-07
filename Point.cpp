@@ -12,8 +12,8 @@ Point::Point(int x, int y, char k) : x(x), y(y) , k(k){
 }
 
 Point::~Point() {
-
 }
+
 int Point::get_x(){
 	return x;
 }
@@ -21,12 +21,12 @@ int Point::get_x(){
 int Point::get_y(){
 	return y;
 }
+
 char Point::get_char() const{
 	return k;
 }
 
-Point::Point(Point const &a)
-{
+Point::Point(Point const &a){
 	*this = a;
 }
 
@@ -53,16 +53,18 @@ void Point::left(){
 	x--;
 	x = x >= 0 ? x : 0;
 }
+
 void Point::right(){
 	x++;
 	x = x < getmaxx(stdscr) - 10 ? x : getmaxx(stdscr) - 10;
 }
+
 void Point::up(){
 	y--;
 	y = y >= 0 ? y : 0;
 }
+
 void Point::down(){
 	y++;
-	// y = y >= 0 ? y : 0;
 	y = y < getmaxy(stdscr) - 10 ? y : getmaxy(stdscr) - 10;
 }

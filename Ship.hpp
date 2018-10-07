@@ -11,7 +11,6 @@ class Ship : public Object
 	Ship();
 	~Ship();
 	Ship(Ship const &src);
-
 	Ship &operator=(Ship const &src);
 
 };

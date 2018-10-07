@@ -1,15 +1,10 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy() {
-
-}
-
+Enemy::Enemy() {}
 Enemy &Enemy::operator=(Enemy const &src) {
-
 	(void)src;
 	return (*this);
 }
-
 Enemy::Enemy(Enemy const &src) {
 	*this = src;
 }
@@ -69,19 +64,6 @@ Enemy::Enemy(Point const &a) : Object(a)
 			add_point(Point  	(3,1, '\\'));
 			add_point(Point  	(3,2, '#'));
 			add_point(Point  	(3,3, '#'));
-
-
-		// add_point(Point(9, 0, '_'));
-			// add_point(Point(8, 0, '_'));
-			// add_point(Point(10, 0, '_'));
-			// add_point(Point(11, 0, '_'));
-			// add_point(Point(2, 1, '_'));
-			// add_point(Point(3, 1, '_'));
-			// add_point(Point(4, 1, '_'));
-			// add_point(Point(5, 1, '_'));
-			// add_point(Point(6, 1, '_'));
-			// add_point(Point(1, 0, '#'));
-			// add_point(Point(1, 0, '#'));
 		default:
 			break;
 	}

@@ -1,7 +1,6 @@
 #include "Ship.hpp"
 
-Ship::Ship()
-{
+Ship::Ship(){
 	set_health(100);
 	add_point(Point(1, 0, '\\'));
 	add_point(Point(1, 1, '#'));
@@ -10,9 +9,7 @@ Ship::Ship()
 	add_point(Point(2, 1, '>'));
 }
 
-Ship::~Ship()
-{	
-	
+Ship::~Ship(){
 }
 
 Ship::Ship(Ship const &src) {
@@ -20,7 +17,7 @@ Ship::Ship(Ship const &src) {
 }
 
 Ship &Ship::operator=(Ship const &src) {
-
+	
 	(void)src;
 	return (*this);
 }
