@@ -11,6 +11,7 @@ class Object{
 
 	public:
 		Object();
+		Object(Object const &src);
 		Object(Point const &a);
 		virtual ~Object();
 
@@ -19,6 +20,7 @@ class Object{
 		virtual void up();
 		virtual void down();
 
+		Object &operator=(Object const &src);
 		Point operator[](int i) const;
 		void add_point(Point const &a);
 		

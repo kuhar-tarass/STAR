@@ -10,6 +10,15 @@ bool Object::colision(Object const &a){
 	return false;
 }
 
+Object::Object(Object const &src) {
+	*this = src;
+}
+
+Object &Object::operator=(Object const &src) {
+
+	(void)src;
+	return (*this);
+}
 
 void Object::clearObj(){
 		for (int i = 0; i < n_; i++){

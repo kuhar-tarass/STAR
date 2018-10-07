@@ -9,12 +9,117 @@
 #include "Brevno.hpp"
 
 
-int main(int argc, char const *argv[])
+void menu() {
+	srand(time(NULL));
+	initscr();
+	curs_set(0);
+	clear();
+	start_color();
+	use_default_colors();
+	noecho();
+	cbreak();
+	refresh();
+	keypad(stdscr, true);
+	std::string ch[] = {
+	"    _   _                                            \n",
+	"   | \\ | |                                           \n",
+	"   |  \\| | _____      __   __ _  __ _ _ __ ___   ___ \n",
+	"   | . ` |/ _ \\ \\ /\\ / /  / _` |/ _` | '_ ` _ \\ / _ \\\n",
+	"   | |\\  |  __/\\ V  V /  | (_| | (_| | | | | | |  __/\n",
+	"   |_| \\_|\\___| \\_/\\_/    \\__, |\\__,_|_| |_| |_|\\___|\n",
+	"                           __/ |                     \n",
+	"                          |___/ ",
+	"                _ _   \n", //8
+	"               (_| |  \n",
+	"     __ _ _   _ _| |_ \n",
+	"    / _` | | | | | __|\n",
+	"   | (_| | |_| | | |_ \n",
+	"    \\__, |\\__,_|_|\\__|\n",
+	"       | |            \n",
+	"       |_|"};
+	int choice;
+	int highlight = 0;
+	int i;
+	init_pair(1, COLOR_RED,  -1);//COLOR_BLUE);
+	init_pair(2, COLOR_BLUE, -1);//COLOR_CYAN);
+	init_pair(3, COLOR_CYAN, -1);//COLOR_YELLOW);
+	init_pair(4, COLOR_YELLOW,-1);//COLOR_GREEN);
+	init_pair(5, COLOR_GREEN, -1);//COLOR_RED);
+	while (1) {
+		nodelay(stdscr, true);
+		srand(time(0));
+		for (i = 0; i < 2; i++) {
+			if (i == highlight)
+				wattron(stdscr, A_REVERSE);
+			int col = rand() % 5;
+			attron(COLOR_PAIR(col));
+			mvwprintw(stdscr, i*9+2, 60, ch[i*8].c_str());
+			mvwprintw(stdscr, i*9+3, 60, ch[i*8+1].c_str());
+			mvwprintw(stdscr, i*9+4, 60, ch[i*8+2].c_str());
+			mvwprintw(stdscr, i*9+5, 60, ch[i*8+3].c_str());
+			mvwprintw(stdscr, i*9+6, 60, ch[i*8+4].c_str());
+			mvwprintw(stdscr, i*9+7, 60, ch[i*8+5].c_str());
+			mvwprintw(stdscr, i*9+8, 60, ch[i*8+6].c_str());
+			mvwprintw(stdscr, i*9+9, 60, ch[i*8+7].c_str());
+			wattroff(stdscr, A_REVERSE);
+			attroff(COLOR_PAIR(col));
+			
+		}
+		choice = wgetch(stdscr);
+		switch(choice) {
+			case KEY_UP:
+				highlight--;
+				if(highlight == -1)
+					highlight = 0;
+				break;
+			case KEY_DOWN:
+				highlight++;
+				if (highlight == 2)
+					highlight = 1;
+				break;
+			default:
+				break;
+		}
+		if (choice == 10)
+			break ;
+	}
+	if (highlight == 0) {
+		clear();
+		return ;
+	}
+	else {
+		clear();
+		while (1) {
+		 	int col = rand() % 5;
+		 	attron(COLOR_PAIR(col));
+			mvwprintw(stdscr,10, 0,
+					 "                            ::::::::   ::::::::   ::::::::  :::::::::        :::::::::  :::   ::: :::::::::: \n"
+					 "                           :+:    :+: :+:    :+: :+:    :+: :+:    :+:       :+:    :+: :+:   :+: :+:        \n"
+					 "                           +:+        +:+    +:+ +:+    +:+ +:+    +:+       +:+    +:+  +:+ +:+  +:+        \n"
+					 "                           :#:        +#+    +:+ +#+    +:+ +#+    +:+       +#++:++#+    +#++:   +#++:++#   \n"
+					 "                           +#+   +#+# +#+    +#+ +#+    +#+ +#+    +#+       +#+    +#+    +#+    +#+        \n"
+					 "                           #+#    #+# #+#    #+# #+#    #+# #+#    #+#       #+#    #+#    #+#    #+#        \n"
+					 "                            ########   ########   ########  #########        #########     ###    ########## ");
+			attroff(COLOR_PAIR(col));
+			nodelay(stdscr, true);
+			if (getch() != -1) {
+				system("clear");
+				exit(EXIT_SUCCESS);
+			}
+			refresh();
+		}
+		getch();
+		endwin();
+	}
+	exit(EXIT_SUCCESS);
+}
+
+int main(void)
 {
-	
-{
-		Ship my;
-	clock_t start  =  clock(), start1 =  clock(), start2 =  clock(), start3 =  clock();
+
+	menu();
+	Ship my;
+	clock_t start1 =  clock(), start2 =  clock(), start3 =  clock();
 	Object * enemy[30];
 	Object * freind[30];
 	for(int i= 0; i < 30; i++){
@@ -113,13 +218,12 @@ int main(int argc, char const *argv[])
 		case KEY_DOWN:	my.down();	break;
 		case KEY_RIGHT:	my.right();	break;
 		case KEY_LEFT:	my.left();	break;
-		case 27:		endwin();	return 0;
+		case 27:		endwin();	menu(); break;
 		default:					break;
 		}
 		refresh();
 	}
 	endwin();
-}
-	system("leaks a.out");
+	menu();
 	return 0;
 }

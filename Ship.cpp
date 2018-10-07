@@ -14,3 +14,13 @@ Ship::~Ship()
 {	
 	
 }
+
+Ship::Ship(Ship const &src) {
+	*this = src;
+}
+
+Ship &Ship::operator=(Ship const &src) {
+
+	(void)src;
+	return (*this);
+}

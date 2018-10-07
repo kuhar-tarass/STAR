@@ -11,6 +11,7 @@ class Point{
 	public:
 	
 	Point();
+	~Point();
 	Point(int x, int y);
 	Point(int x, int y, char k);
 	Point(Point const &a);
